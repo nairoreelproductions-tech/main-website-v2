@@ -1,0 +1,23 @@
+# Sensitive configuration files
+config/database.php
+
+# System files
+.DS_Store
+Thumbs.db
+*.log
+
+# Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Temporary files
+*.tmp
+*.bak
+*~
+
+# Cache
+cache/
+tmp/
+temp/
