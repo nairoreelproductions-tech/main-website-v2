@@ -1,0 +1,105 @@
+<?php
+/**
+ * Helper Functions
+ */
+
+// Check if user is logged in
+function isLoggedIn() {
+    return isset($_SESSION['user_id']);
+}
+
+// Check if user is admin
+function isAdmin() {
+    return isset($_SESSION['role']) && $_SESSION['role'] === 'admin';
+}
+
+// Check if user is staff
+function isStaff() {
+    return isset($_SESSION['role']) && $_SESSION['role'] === 'staff';
+}
+
+// Check if user is client
+function isClient() {
+    return isset($_SESSION['role']) && $_SESSION['role'] === 'client';
+}
+
+// Redirect if not logged in
+function requireLogin() {
+    if (!isLoggedIn()) {
+        header('Location: /index.php');
+        exit();
+    }
+}
+
+// Redirect if not admin
+function requireAdmin() {
+    requireLogin();
+    if (!isAdmin()) {
+        header('Location: /index.php');
+        exit();
+    }
+}
+
+// Sanitize input
+function clean($data) {
+    return htmlspecialchars(strip_tags(trim($data)));
+}
+
+// Format date
+function formatDate($date) {
+    return date('M d, Y', strtotime($date));
+}
+
+// Generate temporary password
+function generateTempPassword($length = 12) {
+    $characters = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ!@#$%';
+    $tempPassword = '';
+    $max = strlen($characters) - 1;
+    
+    for ($i = 0; $i < $length; $i++) {
+        $tempPassword .= $characters[random_int(0, $max)];
+    }
+    
+    return $tempPassword;
+}
+
+// Set temporary password for user (expires in 12 hours)
+function setTempPassword($userId, $tempPassword, $conn) {
+    $hashedTempPassword = password_hash($tempPassword, PASSWORD_DEFAULT);
+    $expiresAt = date('Y-m-d H:i:s', strtotime('+12 hours'));
+    
+    $stmt = $conn->prepare("
+        UPDATE users 
+        SET temp_password = ?, 
+            temp_password_expires = ?,
+            force_password_change = 1
+        WHERE id = ?
+    ");
+    
+    return $stmt->execute([$hashedTempPassword, $expiresAt, $userId]);
+}
+
+// Clear temporary password after user changes it
+function clearTempPassword($userId, $conn) {
+    $stmt = $conn->prepare("
+        UPDATE users 
+        SET temp_password = NULL, 
+            temp_password_expires = NULL,
+            force_password_change = 0
+        WHERE id = ?
+    ");
+    
+    return $stmt->execute([$userId]);
+}
+
+// Send email notification
+function sendEmail($to, $subject, $message, $from = 'noreply@nairoreelproductions.com') {
+    $headers = "From: $from\r\n";
+    $headers .= "Reply-To: $from\r\n";
+    $headers .= "X-Mailer: PHP/" . phpversion();
+    $headers .= "MIME-Version: 1.0\r\n";
+    $headers .= "Content-Type: text/plain; charset=UTF-8\r\n";
+    
+    return mail($to, $subject, $message, $headers);
+}
+?>
