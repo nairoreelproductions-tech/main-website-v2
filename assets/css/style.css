@@ -1,0 +1,318 @@
+/* ==========================================
+   NAIROREEL CLIENT PORTAL - MAIN STYLESHEET
+   
+   SECTIONS:
+   1. Fonts - Boska and Recia font faces
+   2. Global Styles - Resets and base styles
+   3. Noise Texture - Subtle background overlay
+   4. Login Page - Centered login form
+   5. Contact Reset Page - Password reset contact info
+   6. Dashboard Layout - Main portal structure (to be added)
+   7. Components - Reusable UI elements (to be added)
+   8. Responsive - Mobile adjustments (to be added)
+   ========================================== */
+
+/* ========================================
+   1. FONTS
+   Boska for headings, Recia for body
+   ======================================== */
+@font-face {
+    font-family: 'Boska';
+    src: url('../fonts/Boska-Black.woff2') format('woff2'),
+         url('../fonts/Boska-Black.woff') format('woff'),
+         url('../fonts/Boska-Black.ttf') format('truetype');
+    font-weight: 900;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Recia';
+    src: url('../fonts/Recia-Regular.woff2') format('woff2'),
+         url('../fonts/Recia-Regular.woff') format('woff'),
+         url('../fonts/Recia-Regular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Recia';
+    src: url('../fonts/Recia-Medium.woff2') format('woff2'),
+         url('../fonts/Recia-Medium.woff') format('woff'),
+         url('../fonts/Recia-Medium.ttf') format('truetype');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* ========================================
+   2. GLOBAL STYLES
+   Base resets and typography
+   ======================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Recia', 'Segoe UI', sans-serif;
+    background-color: #000000;
+    color: #ffffff;
+    line-height: 1.6;
+    position: relative;
+    min-height: 100vh;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Boska', serif;
+    font-weight: 900;
+}
+
+/* ========================================
+   3. NOISE TEXTURE
+   Subtle texture overlay, non-interactive
+   ======================================== */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+
+    /* Apply the SVG filter we defined in the HTML */
+    filter: url(#noise-filter);
+    
+    /* Control the grain strength/visibility here */
+    opacity: 0.03; /* Adjust to be as subtle as you like */
+
+    /* This is still 100% correct! */
+    pointer-events: none;
+    z-index: 9999;
+}
+
+
+/* ========================================
+   4. LOGIN PAGE
+   Centered login form with borderless inputs
+   ======================================== */
+.login-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 40px 20px;
+}
+
+.login-box {
+    width: 100%;
+    max-width: 450px;
+    text-align: center;
+}
+
+.logo {
+    max-width: 180px;
+    margin-bottom: 40px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.login-box h2 {
+    font-family: 'Boska', serif;
+    font-weight: 900;
+    color: #ffffff;
+    font-size: 32px;
+    margin-bottom: 12px;
+    letter-spacing: 1px;
+}
+
+.login-box .subheader {
+    font-family: 'Recia', sans-serif;
+    font-weight: 400;
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 14px;
+    margin-bottom: 50px;
+    line-height: 1.4;
+}
+
+.form-group {
+    margin-bottom: 30px;
+    text-align: left;
+    position: relative;
+}
+
+.form-group label {
+    display: none;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 12px 0;
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+    color: #ffffff;
+    font-family: 'Recia', sans-serif;
+    font-size: 15px;
+    transition: border-color 0.3s ease;
+    outline: none;
+}
+
+.form-group input::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.form-group input:focus {
+    border-bottom-color: #EA1821;
+}
+
+.forgot-password {
+    display: block;
+    text-align: right;
+    margin: 20px 0;
+    font-size: 13px;
+}
+
+.forgot-password a {
+    color: rgba(255, 255, 255, 0.7);
+    text-decoration: none;
+    font-family: 'Recia', sans-serif;
+    transition: color 0.3s ease;
+}
+
+.forgot-password a:hover {
+    color: #ffffff;
+}
+
+.btn {
+    width: 100%;
+    padding: 14px;
+    background-color: #EA1821;
+    color: #ffffff;
+    border: none;
+    border-radius: 20px;
+    font-family: 'Recia', sans-serif;
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 10px;
+}
+
+.btn:hover {
+    background-color: #ffffff;
+    color: #000000;
+}
+
+.error-message {
+    color: #EA1821;
+    font-family: 'Recia', sans-serif;
+    font-size: 13px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.success-message {
+    color: #4CAF50;
+    font-family: 'Recia', sans-serif;
+    font-size: 13px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+/* ========================================
+   5. CONTACT RESET PAGE
+   Password reset contact information
+   ======================================== */
+.contact-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 40px 20px;
+}
+
+.contact-box {
+    width: 100%;
+    max-width: 500px;
+    text-align: center;
+}
+
+.contact-box h2 {
+    font-family: 'Boska', serif;
+    font-weight: 900;
+    color: #ffffff;
+    font-size: 28px;
+    margin-bottom: 20px;
+}
+
+.contact-box p {
+    font-family: 'Recia', sans-serif;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 15px;
+    line-height: 1.6;
+    margin-bottom: 40px;
+}
+
+.contact-info {
+    background-color: rgba(255, 255, 255, 0.05);
+    padding: 30px;
+    margin-bottom: 30px;
+    text-align: left;
+}
+
+.contact-info h3 {
+    font-family: 'Recia', sans-serif;
+    font-weight: 500;
+    font-size: 14px;
+    color: #EA1821;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 20px;
+}
+
+.contact-item {
+    margin-bottom: 15px;
+}
+
+.contact-item strong {
+    display: block;
+    font-family: 'Recia', sans-serif;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 5px;
+}
+
+.contact-item span,
+.contact-item a {
+    font-family: 'Recia', sans-serif;
+    color: #ffffff;
+    font-size: 16px;
+    text-decoration: none;
+}
+
+.contact-item a:hover {
+    color: #EA1821;
+}
+
+.back-link {
+    display: inline-block;
+    margin-top: 20px;
+    color: rgba(255, 255, 255, 0.7);
+    text-decoration: none;
+    font-family: 'Recia', sans-serif;
+    font-size: 13px;
+    transition: color 0.3s ease;
+}
+
+.back-link:hover {
+    color: #ffffff;
+}
