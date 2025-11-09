@@ -1,0 +1,26 @@
+<?php
+/**
+ * Database Configuration
+ */
+
+// Database credentials
+define('DB_HOST', 'localhost');
+define('DB_NAME', 'nairoreel_portal');
+define('DB_USER', 'nairoreel_admin_rono');
+define('DB_PASS', 'add password here');
+
+// Create connection
+try {
+    $conn = new PDO("mysql:host=" . DB_HOST . ";dbname=" . DB_NAME, DB_USER, DB_PASS);
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $conn->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+} catch(PDOException $e) {
+    die("Connection failed: " . $e->getMessage());
+}
+
+// Session configuration
+ini_set('session.cookie_httponly', 1);
+ini_set('session.use_only_cookies', 1);
+ini_set('session.cookie_secure', 1); // Set to 1 when using HTTPS
+session_start();
+?>
